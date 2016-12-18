@@ -1,0 +1,118 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
+{% if not configure_options_available %}
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+{% endif %}
+use Symfony\Component\OptionsResolver\OptionsResolver;
+{% if add_translation|default(false) %}
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+{% endif %}
+{% if media_classes|length>0 %}
+use Donjohn\MediaBundle\Form\MediaType;
+{% endif %}
+{% endblock use_statements %}
+
+{% block class_definition %}
+class {{ form_class }} extends AbstractType
+{% endblock class_definition %}
+{
+{% block class_body %}
+    {%- if fields|length > 0 %}
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+{% if add_translation|default(false) %}
+                ->add('translations', TranslationsType::class)
+{% endif %}
+{% for field, metadata in fields -%}
+{%- if field is defined and metadata.type in ['date', 'time', 'datetime'] %}
+{% if metadata.type== 'datetime' %}
+                ->add('{{ field }}', Type\DateTimeType::class, [
+                    'label' => '{{ field|capitalize }}',
+                    'widget' => 'single_text',
+                    'attr' => [
+                        'data-datetimepicker' => 'on',
+                        'data-date-format' => 'YYYY-MM-DD HH:mm:ss',
+                    ]
+                ])
+{% elseif metadata.type== 'date' %}
+                ->add('{{ field }}', Type\DateType::class, [
+                    'label' => '{{ field|capitalize }}',
+                    'widget' => 'single_text',
+                    'attr' => [
+                        'data-datetimepicker' => 'on',
+                        'data-date-format' => 'YYYY-MM-DD',
+                    ]
+                ])
+{% elseif metadata.type== 'time' %}
+                ->add('{{ field }}', Type\TimeType::class, [
+                    'label' => '{{ field|capitalize }}',
+                    'widget' => 'single_text',
+                    'with_seconds' => true,
+                    'attr' => [
+                        'data-datetimepicker' => 'on',
+                        'data-date-format' => 'HH:mm:ss',
+                    ]
+                ])
+{% endif %}
+{% elseif field!='id' %}
+{% if metadata.type=='relation' and metadata.entity in media_classes %}
+                ->add('{{ field }}', MediaType::class, array('label' => '{{ field|capitalize }}', 'data_class' => '{{ metadata.entity }}'))
+{% else %}
+                ->add('{{ field }}', null, array('label' => '{{ field|capitalize }}'))
+{% endif %}
+{% endif %}
+{%- endfor %}
+
+        ;
+    }
+    {% endif %}
+
+    {%- if not configure_options_available %}
+
+    /**
+     * Sets the default options for this type.
+     *
+     * This method should be removed when upgrading to Symfony 2.7.
+     *
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
+    {% endif %}
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
+        ));
+    }
+
+    {%- if get_name_required %}
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return '{{ form_type_name }}';
+    }
+    {% endif %}
+
+{% endblock class_body %}
+}

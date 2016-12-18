@@ -1,0 +1,33 @@
+{
+    "name": "donjohn/adminlte-generator-bundle",
+    "description": "Crud generator with adminlte theme",
+    "type" : "symfony-bundle",
+    "authors" : [{
+      "name" : "Donjohn",
+      "email" : "donjohn.geekzone@gmail.com"
+    }],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/assetic-bundle": "^2.8",
+        "sensio/generator-bundle": "^3.1",
+        "knplabs/knp-menu-bundle": "^2.1",
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "lexik/form-filter-bundle": "~5.0",
+        "avanzu/admin-theme-bundle": "~2.0@dev"
+    },
+    "suggest": {
+        "knplabs/doctrine-behaviors": "To manage translations and more",
+        "a2lix/translation-form-bundle": "To manage translations in form type",
+        "donjohn/media-bundle": "To manage medias"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Donjohn\\AdminLTEGeneratorBundle" : ""
+        }
+    },
+    "target-dir" : "Donjohn/AdminLTEGeneratorBundle",
+    "config": {
+        "component-dir": "web/components",
+        "component-baseurl": "/components"
+    }
+}

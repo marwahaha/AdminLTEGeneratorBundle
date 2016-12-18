@@ -1,0 +1,20 @@
+<a href="{{ "{{ path('" ~ route_name_prefix ~ "_index') }}" }}" role="button" class="btn btn-default btn-sm btn-flat"><i class="fa fa-times"></i> Cancel</a>
+
+{%- if ('delete' in actions) and (not hide_delete) %}
+  <p>
+    {{ '{{ form_start(delete_form, {"attr":{"id":"delete"}}) }}' }}
+{%- endif %}
+
+{%- if ('edit' in actions) and (not hide_edit) %}
+    <a href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" role="button" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-edit"></i> Edit</a>
+{%- endif %}
+
+{%- if ('delete' in actions) and (not hide_delete) %}
+    <button class="btn btn-danger btn-sm btn-flat" type="submit"><i class="fa fa-trash-o"></i> Delete</button>
+  </p>
+{% endif %}
+
+{%- if ('delete' in actions) and (not hide_delete) %}
+{{ "{% include '"~ namespace|replace({'\\': ''}) ~":" ~  entity|replace({'\\': '/'}) ~":_modal_delete.html.twig' %}" }}
+{{ '{{ form_end(delete_form) }}' }}
+{%- endif %}

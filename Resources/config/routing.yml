@@ -1,0 +1,6 @@
+admin_dashboard:
+    path: /dashboard
+    defaults: { _controller: DonjohnAdminLTEGeneratorBundle:Dashboard:index }
+    options:
+        avanzu_admin_route: welcome
+        knp_menu: Dashboard

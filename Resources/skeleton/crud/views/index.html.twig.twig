@@ -1,0 +1,112 @@
+{% block extends %}
+{{ "{% extends 'DonjohnAdminLTEGeneratorBundle::admin_layout.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'ASC'}) }}\">{{ label }} <i class=\"fa fa-sort-down\"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'DESC'}) }}\">{{ label }} <i class=\"fa fa-sort-up\"></i></a>
+            {% endif %}
+        {% else %}
+            <a href=\"{{ path('"~ route_name_prefix ~"_sort', {field: field, type: 'ASC'}) }}\">{{ label }} <i class=\"fa fa-sort\"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}" }}
+
+{{ "{% from _self import thead %}" }}	
+{{ "{% block avanzu_page_content %}" }}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title">{{ entity }}</h3>
+					<div class="box-tools">
+					{{ "{% include '"~ namespace|replace({'\\': ''}) ~":" ~  entity|replace({'\\': '/'}) ~":filter.html.twig' with {form: form} %}" }}
+					{% if 'new' in actions -%}			    
+						<a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="btn btn-default btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+					{%- endif %}
+					</div>
+            	</div>            
+				<div class="box-body table-responsive no-padding">
+					<table class="table table-bordered table-hover table-striped">
+						<tr>
+						{%- for field, metadata in fields %}		                
+		                	<th>{{ "{{ thead('" ~ entity|lower ~"', '"~ field ~"', '"~ field|replace({'_': ' '})|capitalize ~"') }}" }}</th>
+		            	{%- endfor %}
+		                <th>Actions</th>
+		            	</tr>              
+						{{ '{% for ' ~ entity_singularized ~ ' in pagination %}' }}
+				        <tr>
+				        {%- for field, metadata in fields %}
+				            {%- if loop.first and ('show' in actions) %}
+
+				                <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+
+				            {%- elseif metadata.type in ['datetime'] %}
+
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y H:i:s\') }}{% endif %}' }}</td>
+				            
+				            {%- elseif metadata.type in ['date'] %}
+
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y\') }}{% endif %}' }}</td>
+				          
+				            {%- elseif metadata.type in ['time'] %}
+
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+				            {%- elseif metadata.type in ['array'] %}
+
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+				            {%- elseif metadata.type in ['boolean'] %}
+
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}<span class="label label-success">Yes</span>{% else %}<span class="label label-danger">No</span>{% endif %}' }}</td>
+
+				            {%- else %}
+
+				                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+				            {%- endif %}
+
+				            {%- if loop.last %}
+
+				                <td>
+				                	<div class="tools">
+				                		{%- for action in record_actions %}
+				                			{% if action == 'edit' %}
+				                				{% set iconBtn = 'fa-edit' %}		
+				                				{% set textBtn = 'Edit' %}                					
+				                			{% endif %}		                 
+				                			{% if action == 'show' %}
+				                				{% set iconBtn = 'fa-eye' %}		
+				                				{% set textBtn = 'Show' %}                	                					
+				                			{% endif %}		                       
+				                            <a class="btn btn-default btn-sm btn-flat" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}"><i class="fa {{iconBtn}}"></i>&nbsp;{{ textBtn }}</a>		                        
+				                    {%- endfor %}
+		                    		
+		                  			</div>		                    
+				                </td>
+
+				            {%- endif %}
+				        {%- endfor %}
+
+				        </tr>
+			        {{ '{% endfor %}' }}
+		          	</table>
+		           </div>            
+
+		            <div class="box-footer clearfix">
+						<a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="btn btn-default btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+		            	{{ '{{ knp_pagination_render(pagination) }}' }}		              
+		            </div>		           
+			</div>
+	    </div>
+	</div>
+
+{{ "{% endblock avanzu_page_content %}" }}
+{% endblock body %}

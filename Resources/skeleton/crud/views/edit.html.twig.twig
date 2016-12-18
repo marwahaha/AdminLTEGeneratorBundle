@@ -1,0 +1,28 @@
+{% block extends %}
+{{ "{% extends 'DonjohnAdminLTEGeneratorBundle::admin_layout.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block avanzu_page_content %}" }}
+<div class="row">
+  <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Edit {{ entity }}</h3>
+        </div>
+        {{ '{{ form_start(edit_form, {"attr":{"novalidate":"novalidate"}}) }}' }}
+        <div class="box-body">
+        {{ '{{ form_widget(edit_form) }}' }}
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-save"></i> Save</button>
+          {{ '{{ form_end(edit_form) }}' }}
+          {% set hide_edit, hide_delete = true, false %}
+          {{ include('crud/views/others/record_actions.html.twig.twig') -}}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{{ "{% endblock avanzu_page_content %}" }}
+{% endblock body %}

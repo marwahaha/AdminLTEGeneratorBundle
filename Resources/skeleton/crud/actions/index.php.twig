@@ -1,0 +1,40 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Lists all {{ entity }} entities.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}_index", options={"knp_menu": "{{ entity }}"})
+     * @Method("GET")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function indexAction(Request $request)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm('{{ namespace }}\Form\{{ entity }}FilterType');
+        if (!is_null($response = $this->saveFilter($request, $form, '{{ entity|lower }}', '{{ route_name_prefix }}_index'))) {
+            return $response;
+        }                
+
+        $qb = $em->getRepository('{{ bundle }}:{{ entity }}')->createQueryBuilder('{{ entity|lower|slice(0, 1) }}');
+        if (is_array($order = $this->getOrder($request, '{{ entity|lower }}'))) {
+            $qb->orderBy($order['field'], $order['type']);
+        }
+        $pagination = $this->filter($request, $form, $qb, '{{ entity|lower }}');
+
+{% endblock method_body %}
+
+{% block method_return %}
+        return $this->render('{{ namespace|replace({'\\': ''}) }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', array(
+            'form' => $form->createView(),
+            'pagination' => $pagination,
+        ));
+{% endblock method_return %}
+    }
