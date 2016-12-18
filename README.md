@@ -5,18 +5,20 @@ First, give credits to https://github.com/aleste/AdminLTEGeneratorBundle and htt
 ### Composer
 
 Add those lines to your composer.json
-
 ```yaml
 #composer.json
-    "require": {
-        ...
-      "donjohn/adminlte-generator-bundle": "^1.0"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "repositories": [
+      {
+        "url": "https://github.com/Donjohn/AdminLTEGeneratorBundle.git",
+        "type": "git"
+      }
+    ],
 ```
 
-and update
+then type:
+```
+composer require donjohn/adminlte-generator-bundle
+```
 
 ### Kernel
 
