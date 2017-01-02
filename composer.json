@@ -1,12 +1,19 @@
 {
     "name": "donjohn/adminlte-generator-bundle",
+    "type": "symfony-bundle",
     "description": "Crud generator with adminlte theme",
-    "type" : "symfony-bundle",
-    "authors" : [{
-      "name" : "Donjohn",
-      "email" : "donjohn.geekzone@gmail.com"
-    }],
+    "keywords": ["crud","adminlte", "symfony"],
+    "homepage": "https://github.com/Donjohn/AdminLTEGeneratorBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Donjohn",
+            "email": "donjohn.geekzone@gmail.com",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "symfony/assetic-bundle": "^2.8",
         "sensio/generator-bundle": "^3.1",
