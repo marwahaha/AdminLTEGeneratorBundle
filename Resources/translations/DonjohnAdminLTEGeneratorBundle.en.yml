@@ -7,6 +7,7 @@ error_relationship: You can not erase. The element has relationships with other 
 filter_title: Filters
 filter_search_title: Search filters
 filter_search_subtitle: Apply one or more filters
+edit_title: Edit
 button_filter: Filter
 button_clear: Clear
 button_cancel: Cancel
@@ -15,3 +16,8 @@ button_edit: Edit
 button_show: Show
 button_save: Save
 admin_title: Admin
+clear_log: Clear Log
+modal_delete_remains: It remains to delete the record. This process is irreversible.
+modal_delete_confirm: do you wish to continue ?
+yes_remove: Yes, remove
+no_cancel: No, cancel
