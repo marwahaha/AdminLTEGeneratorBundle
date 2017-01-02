@@ -25,7 +25,7 @@
             $em->persist(${{ entity_singularized }});
             $em->flush();
 
-            $this->addFlash('success', 'admin.action.sucess');
+            $this->addFlash('success', 'success_new');
             
             return $this->redirectToRoute('{{ route_name_prefix }}_index');            
 

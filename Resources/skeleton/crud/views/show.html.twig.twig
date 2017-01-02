@@ -35,7 +35,7 @@
 
                     {%- elseif metadata.type in ['boolean'] %}
 
-                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}<span class="label label-success">Si</span>{% else %}<span class="label label-danger">No</span>{% endif %}' }}</td>
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}<span class="label label-success">{{ \'yes\'|trans({},\'DonjohnAdminLTEGeneratorBundle\') }}</span>{% else %}<span class="label label-danger">{{ \'no\'|trans({},\'DonjohnAdminLTEGeneratorBundle\') }}</span>{% endif %}' }}</td>
 
                     {%- else %}
 
@@ -52,7 +52,7 @@
             <div class="box-footer clearfix">
                 <ul class="pagination pagination-sm no-margin">                                       
                     {% set hide_edit, hide_delete = false, false %}
-                    {{ include('crud/views/others/record_actions.html.twig.twig') -}}    
+                    {{ include('crud/views/others/record_actions.html.twig.twig') -}}
                 </ul>
             </div>
         </div>

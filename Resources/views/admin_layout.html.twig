@@ -22,26 +22,6 @@
 
     {% endblock %}
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
 <body class="{{ avanzu_admin_context.skin|default("")|body_class }}">
 <div class="wrapper">
 
@@ -56,7 +36,7 @@ desired effect
             </span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-               {% block avanzu_logo_lg %} <b>Admin</b>LTE {% endblock %}
+               {% block avanzu_logo_lg %} <b>{{ 'admin_title'|trans({}, 'DonjohnAdminLTEGeneratorBundle') }}</b> {% endblock %}
             </span>
         </a>
 
@@ -314,7 +294,7 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                {% block avanzu_page_title %}{{ 'admin.title'|trans({}, 'DonjohnAdminLTEGenerator') }}{% endblock %}
+                {% block avanzu_page_title %}{{ 'admin_title'|trans({}, 'DonjohnAdminLTEGeneratorBundle') }}{% endblock %}
                 <small>{% block avanzu_page_subtitle %}{% endblock %}</small>
             </h1>
 

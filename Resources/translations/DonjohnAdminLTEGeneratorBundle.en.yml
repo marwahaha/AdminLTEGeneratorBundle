@@ -1,0 +1,17 @@
+yes: Yes
+no: No
+success_delete: Entity deleted with success
+success_edit: Entity updated with success
+success_new: Entity created with success
+error_relationship: You can not erase. The element has relationships with other entities.
+filter_title: Filters
+filter_search_title: Search filters
+filter_search_subtitle: Apply one or more filters
+button_filter: Filter
+button_clear: Clear
+button_cancel: Cancel
+button_new: New
+button_edit: Edit
+button_show: Show
+button_save: Save
+admin_title: Admin
