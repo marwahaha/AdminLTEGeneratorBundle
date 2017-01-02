@@ -38,7 +38,6 @@ class {{ form_class }} extends AbstractType
 {%- if field is defined and metadata.type in ['date', 'time', 'datetime'] %}
 {% if metadata.type== 'datetime' %}
                 ->add('{{ field }}', Type\DateTimeType::class, [
-                    'label' => '{{ field|capitalize }}',
                     'widget' => 'single_text',
                     'attr' => [
                         'data-datetimepicker' => 'on',
@@ -47,7 +46,6 @@ class {{ form_class }} extends AbstractType
                 ])
 {% elseif metadata.type== 'date' %}
                 ->add('{{ field }}', Type\DateType::class, [
-                    'label' => '{{ field|capitalize }}',
                     'widget' => 'single_text',
                     'attr' => [
                         'data-datetimepicker' => 'on',
@@ -56,7 +54,6 @@ class {{ form_class }} extends AbstractType
                 ])
 {% elseif metadata.type== 'time' %}
                 ->add('{{ field }}', Type\TimeType::class, [
-                    'label' => '{{ field|capitalize }}',
                     'widget' => 'single_text',
                     'with_seconds' => true,
                     'attr' => [
@@ -67,9 +64,9 @@ class {{ form_class }} extends AbstractType
 {% endif %}
 {% elseif field!='id' %}
 {% if metadata.type=='relation' and metadata.entity in media_classes %}
-                ->add('{{ field }}', MediaType::class, array('label' => '{{ field|capitalize }}', 'data_class' => '{{ metadata.entity }}'))
+                ->add('{{ field }}', MediaType::class, array('data_class' => '{{ metadata.entity }}'))
 {% else %}
-                ->add('{{ field }}', null, array('label' => '{{ field|capitalize }}'))
+                ->add('{{ field }}')
 {% endif %}
 {% endif %}
 {%- endfor %}
