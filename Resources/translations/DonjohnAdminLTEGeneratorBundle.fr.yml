@@ -1,0 +1,23 @@
+yes: Oui
+no: Non
+success_delete: Entité supprimée avec succès
+success_edit: Entité mise à jour avec succès
+success_new: Entité créée avec succès
+error_relationship: Vous ne pouvez pas effacez, une relation avec une autre entité existe.
+filter_title: Filtres
+filter_search_title: Filtres de recherche
+filter_search_subtitle: Un ou plusieurs filtres
+edit_title: Edition
+button_filter: Filtrer
+button_clear: Effacer
+button_cancel: Annuler
+button_new: Créer
+button_edit: Editer
+button_show: Voir
+button_save: Sauver
+admin_title: Admin
+clear_log: Effacer les logs
+modal_delete_remains: Il reste à effacer l'entité. L'effet est irreversible.
+modal_delete_confirm: souhaitez-vous continuer ?
+yes_remove: Oui, effacez
+no_cancel: Non, annulez
