@@ -1,3 +1,5 @@
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c0671fd2-d522-4db7-a674-2f454b44fa43/mini.png)](https://insight.sensiolabs.com/projects/c0671fd2-d522-4db7-a674-2f454b44fa43)
+
 Installation instruction
 ===================
 First, give credits to https://github.com/aleste/AdminLTEGeneratorBundle and https://github.com/julienhay/AdminLTEGeneratorBundle who started this bundle.
