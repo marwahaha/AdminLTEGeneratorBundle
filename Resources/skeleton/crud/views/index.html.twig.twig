@@ -43,23 +43,20 @@
 						{{ '{% for ' ~ entity_singularized ~ ' in pagination %}' }}
 				        <tr>
 				        {%- for field, metadata in fields %}
-				            {%- if loop.first and ('show' in actions) %}
 
-				                <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+				            {%- if metadata.type in ['datetime'] %}
 
-				            {%- elseif metadata.type in ['datetime'] %}
-
-				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y H:i:s\') }}{% endif %}' }}</td>
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|localizeddate(\'short\', \'short\') }}{% endif %}' }}</td>
 				            
 				            {%- elseif metadata.type in ['date'] %}
 
-				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y\') }}{% endif %}' }}</td>
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|localizeddate(\'short\', \'none\') }}{% endif %}' }}</td>
 				          
 				            {%- elseif metadata.type in ['time'] %}
 
-				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|localizeddate(\'none\', \'short\') }}{% endif %}' }}</td>
 
-				            {%- elseif metadata.type in ['array'] %}
+				            {%- elseif metadata.type in ['array', 'json_array'] %}
 
 				                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
 
@@ -69,7 +66,7 @@
 
 				            {%- else %}
 
-				                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+				                <td data-attributes="{{ metadata.type }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
 
 				            {%- endif %}
 
@@ -86,7 +83,7 @@
 				                				{% set iconBtn = 'fa-eye' %}		
 				                				{% set textBtn = 'button_show' %}
 				                			{% endif %}		                       
-				                            <a class="btn btn-default btn-sm btn-flat" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}"><i class="fa {{iconBtn}}"></i>&nbsp;{{ textBtn ~ "|trans({},'DonjohnAdminLTEGeneratorBundle')"}}</a>
+				                            <a class="btn btn-default btn-sm btn-flat" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}"><i class="fa {{iconBtn}}"></i>&nbsp;{{ "{{ '" ~ textBtn ~ "'|trans({},'DonjohnAdminLTEGeneratorBundle') }}"}}</a>
 				                    {%- endfor %}
 		                    		
 		                  			</div>		                    
