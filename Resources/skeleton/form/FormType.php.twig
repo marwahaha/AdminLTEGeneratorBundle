@@ -13,8 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 {% if add_translation|default(false) %}
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 {% endif %}
-{% if media_classes|length>0 %}
-use Donjohn\MediaBundle\Form\MediaType;
+{% if media_classe|default(false) %}
+use Donjohn\MediaBundle\Form\Type\MediaType;
 {% endif %}
 {% endblock use_statements %}
 
@@ -35,8 +35,8 @@ class {{ form_class }} extends AbstractType
                 ->add('translations', TranslationsType::class)
 {% endif %}
 {% for field, metadata in fields -%}
-{%- if field is defined and metadata.type in ['date', 'time', 'datetime'] %}
-{% if metadata.type== 'datetime' %}
+    {%- if field is defined and metadata.type in ['date', 'time', 'datetime'] %}
+        {% if metadata.type== 'datetime' %}
                 ->add('{{ field }}', Type\DateTimeType::class, [
                     'widget' => 'single_text',
                     'attr' => [
@@ -44,7 +44,7 @@ class {{ form_class }} extends AbstractType
                         'data-date-format' => 'YYYY-MM-DD HH:mm:ss',
                     ]
                 ])
-{% elseif metadata.type== 'date' %}
+        {% elseif metadata.type== 'date' %}
                 ->add('{{ field }}', Type\DateType::class, [
                     'widget' => 'single_text',
                     'attr' => [
@@ -52,7 +52,7 @@ class {{ form_class }} extends AbstractType
                         'data-date-format' => 'YYYY-MM-DD',
                     ]
                 ])
-{% elseif metadata.type== 'time' %}
+        {% elseif metadata.type== 'time' %}
                 ->add('{{ field }}', Type\TimeType::class, [
                     'widget' => 'single_text',
                     'with_seconds' => true,
@@ -61,14 +61,14 @@ class {{ form_class }} extends AbstractType
                         'data-date-format' => 'HH:mm:ss',
                     ]
                 ])
-{% endif %}
-{% elseif field!='id' %}
-{% if metadata.type=='relation' and metadata.entity in media_classes %}
+        {% endif %}
+    {% elseif field!='id' %}
+        {% if metadata.type=='relation' and metadata.entity == media_classe %}
                 ->add('{{ field }}', MediaType::class, array('data_class' => '{{ metadata.entity }}'))
-{% else %}
+        {% else %}
                 ->add('{{ field }}')
-{% endif %}
-{% endif %}
+        {% endif %}
+    {% endif %}
 {%- endfor %}
 
         ;

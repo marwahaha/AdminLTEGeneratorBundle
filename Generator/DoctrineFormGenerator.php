@@ -29,17 +29,17 @@ class DoctrineFormGenerator extends Generator
     private $filesystem;
     private $className;
     private $classPath;
-    private $mediaClasses;
+    private $mediaClasse;
 
     /**
      * Constructor.
      *
      * @param Filesystem $filesystem A Filesystem instance
      */
-    public function __construct(Filesystem $filesystem, array $mediaClasses = array())
+    public function __construct(Filesystem $filesystem, $mediaClasse)
     {
         $this->filesystem = $filesystem;
-        $this->mediaClasses = $mediaClasses;
+        $this->mediaClasse = $mediaClasse;
     }
 
     public function getClassName()
@@ -95,7 +95,7 @@ class DoctrineFormGenerator extends Generator
             'configure_options_available' => method_exists('Symfony\Component\Form\AbstractType', 'configureOptions'),
             'get_name_required' => !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix'),
             'add_translation' => method_exists($metadata->getReflectionClass()->getName(), 'getTranslations'),
-            'media_classes' => $this->mediaClasses
+            'media_classe' => $this->getMediaClass($metadata)
         ));
     }
 
@@ -161,6 +161,14 @@ class DoctrineFormGenerator extends Generator
 
 
         return $fields;
-    }    
+    }
+
+
+    private function getMediaClass($metadata)
+    {
+        foreach ($metadata->associationMappings as $fieldName => $relation) if ($relation['targetEntity'] === $this->mediaClasse)return $this->mediaClasse;
+
+        return null;
+    }
 
 }

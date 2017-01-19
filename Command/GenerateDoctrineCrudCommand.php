@@ -127,7 +127,7 @@ EOT
         if ('annotation' != $format) {
             $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format, $entity, $prefix));
         } else {
-            $runner($this->updateAnnotationRouting($bundle, $entity, $prefix));
+            $runner($this->updateAnnotationRouting($bundle, $entity));
         }
 
         $questionHelper->writeGeneratorSummary($output, $errors);
@@ -165,7 +165,7 @@ EOT
 
         try {
             $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle).'\\'.$entity;
-            $metadata = $this->getEntityMetadata($entityClass);
+            $this->getEntityMetadata($entityClass);
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Entity "%s" does not exist in the "%s" bundle. You may have mistyped the bundle name or maybe the entity doesn\'t exist yet (create it first with the "doctrine:generate:entity" command).', $entity, $bundle));
         }
@@ -178,7 +178,7 @@ EOT
             'You can also ask it to generate "write" actions: new, update, and delete.',
             '',
         ));
-        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to generate the "write" actions', $withWrite ? 'yes' : 'no', '?', $withWrite), $withWrite);
+        $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to generate the "write" actions', $withWrite ? 'yes' : 'no', '?'), $withWrite);
 
         $withWrite = $questionHelper->ask($input, $output, $question);
         $input->setOption('with-write', $withWrite);
@@ -289,9 +289,10 @@ EOT
                 '',
             );
         }
+        return false;
     }
 
-    protected function updateAnnotationRouting(BundleInterface $bundle, $entity, $prefix)
+    protected function updateAnnotationRouting(BundleInterface $bundle, $entity)
     {
         $rootDir = $this->getContainer()->getParameter('kernel.root_dir');
 
@@ -301,7 +302,7 @@ EOT
             $parts = explode('\\', $entity);
             $controller = array_pop($parts);
 
-            $ret = $routing->addAnnotationController($bundle->getName(), $controller);
+            $routing->addAnnotationController($bundle->getName(), $controller);
         }
     }
 
@@ -329,7 +330,7 @@ EOT
         if (null === $this->formGenerator) {
             $this->formGenerator = new DoctrineFormGenerator(
                 $this->getContainer()->get('filesystem'),
-                $this->getContainer()->hasParameter('donjohn.media.entities') ? $this->getContainer()->getParameter('donjohn.media.entities') : array()
+                $this->getContainer()->hasParameter('donjohn.media.entity') ? $this->getContainer()->getParameter('donjohn.media.entity') : null
                 );
             $this->formGenerator->setSkeletonDirs($this->getSkeletonDirs($bundle));
         }
