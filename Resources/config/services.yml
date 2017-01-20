@@ -1,6 +1,8 @@
+parameters:
+    bayday.editor.menu_builder.class: Donjohn\AdminLTEGeneratorBundle\Menu\AdminLTEMenuBuilder
 services:
     bayday.editor.menu_builder:
-        class: Donjohn\AdminLTEGeneratorBundle\Menu\AdminLTEMenuBuilder
+        class: "%bayday.editor.menu_builder.class%"
         arguments: ["@knp_menu.factory", "@event_dispatcher", "@router"]
         tags:
             - { name: knp_menu.menu_builder, method: createAdminMenu, alias: "%donjohn.admin_lte.menu.name%" } # The alias is what is used to retrieve the menu
