@@ -9,12 +9,8 @@ First, give credits to https://github.com/aleste/AdminLTEGeneratorBundle and htt
 Add those lines to your composer.json
 ```yaml
 #composer.json
-    "repositories": [
-      {
-        "url": "https://github.com/Donjohn/AdminLTEGeneratorBundle.git",
-        "type": "git"
-      }
-    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,    
 ```
 
 then type:

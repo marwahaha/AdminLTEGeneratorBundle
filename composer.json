@@ -20,7 +20,7 @@
         "knplabs/knp-menu-bundle": "^2.1",
         "knplabs/knp-paginator-bundle": "^2.5",
         "lexik/form-filter-bundle": "~5.0",
-        "avanzu/admin-theme-bundle": "~2.0@dev"
+        "avanzu/admin-theme-bundle": "~2@dev"
     },
     "suggest": {
         "knplabs/doctrine-behaviors": "To manage translations and more",
