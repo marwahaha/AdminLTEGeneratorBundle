@@ -95,6 +95,7 @@ class DoctrineFormGenerator extends Generator
             'configure_options_available' => method_exists('Symfony\Component\Form\AbstractType', 'configureOptions'),
             'get_name_required' => !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix'),
             'add_translation' => method_exists($metadata->getReflectionClass()->getName(), 'getTranslations'),
+            'add_media' => $this->hasMediaClass($metadata),
             'media_class' => $this->mediaClass
         ));
     }
@@ -161,6 +162,13 @@ class DoctrineFormGenerator extends Generator
 
 
         return $fields;
+    }
+
+    private function hasMediaClass($metadata)
+    {
+        foreach ($metadata->associationMappings as $fieldName => $relation) if ($relation['targetEntity'] === $this->mediaClass) return true;
+
+        return false;
     }
 
 }

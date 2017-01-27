@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 {% if add_translation|default(false) %}
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 {% endif %}
-{% if media_classes|length>0 %}
+{% if add_media|default(false)%}
 use Donjohn\MediaBundle\Form\Type\MediaType;
 {% endif %}
 {% endblock use_statements %}
@@ -63,7 +63,7 @@ class {{ form_class }} extends AbstractType
                 ])
 {% endif %}
 {% elseif field!='id' %}
-{% if metadata.type=='relation' and metadata.entity == media_classe %}
+{% if metadata.type=='relation' and metadata.entity == media_class %}
                 ->add('{{ field }}', MediaType::class )
 {% else %}
                 ->add('{{ field }}')
