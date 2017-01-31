@@ -15,6 +15,7 @@ button_new: Créer
 button_edit: Editer
 button_show: Voir
 button_save: Sauver
+button_delete: Supprimer
 admin_title: Admin
 clear_log: Effacer les logs
 modal_delete_remains: Il reste à effacer l'entité. L'effet est irreversible.
