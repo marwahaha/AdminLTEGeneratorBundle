@@ -15,7 +15,7 @@ button_new: New
 button_edit: Edit
 button_show: Show
 button_save: Save
-button_save: Delete
+button_delete: Delete
 admin_title: Admin
 clear_log: Clear Log
 modal_delete_remains: It remains to delete the record. This process is irreversible.
